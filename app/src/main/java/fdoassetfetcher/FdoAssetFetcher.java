@@ -5,6 +5,7 @@ import io.thinkit.edc.client.connector.model.*;
 import io.thinkit.edc.client.connector.services.Assets;
 import io.thinkit.edc.client.connector.services.Catalogs;
 import jakarta.json.Json;
+
 import java.util.List;
 
 public class FdoAssetFetcher {
@@ -17,10 +18,10 @@ public class FdoAssetFetcher {
         // Criteria for fetching only FDO asset
         List<Criterion> criteria = List.of(
                 Criterion.Builder.newInstance().raw(Json.createObjectBuilder()
-                .add("operator", "=")
-                .add("operandLeft", "isFDO")
-                .add("operandRight", Json.createObjectBuilder().add("@value", "true"))
-                .build()).build()
+                        .add("operandLeft", "https://w3id.org/edc/v0.0.1/ns/isFDO")
+                        .add("operator", "=")
+                        .add("operandRight", "true")
+                        .build()).build()
         );
         // Query for fetching specific asset from catalog
         QuerySpec query = QuerySpec.Builder.newInstance()
@@ -28,9 +29,9 @@ public class FdoAssetFetcher {
                 .limit(10)
                 .sortOrder("ASC")
                 //.sortField("field1")
-                // .filterExpression(criteria)
+                .filterExpression(criteria)
                 .build();
-        //
+        // Request to catalog
         CatalogRequest request = CatalogRequest.Builder.newInstance()
                 .protocol("dataspace-protocol-http")
                 .counterPartyAddress("http://localhost:19194/protocol")
@@ -40,8 +41,8 @@ public class FdoAssetFetcher {
         if (result.isSucceeded() && result.getContent() != null) {
             return result.getContent();
         } else {
-             result.getErrors().forEach(e -> System.out.println(e.message()));
-             return null;
+            result.getErrors().forEach(e -> System.out.println(e.message()));
+            return null;
         }
     }
 
@@ -50,7 +51,7 @@ public class FdoAssetFetcher {
         Result<Asset> result = assetsService.get(assetId);
         if (result.isSucceeded() && result.getContent() != null) {
             return result.getContent();
-               } else {
+        } else {
             result.getErrors().forEach(e -> System.out.println(e.message()));
             return null;
         }
