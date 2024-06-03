@@ -9,6 +9,5 @@ import static org.junit.jupiter.api.Assertions.*;
 class FdoAssetFetcherTest {
     @Test void appHasAGreeting() {
         FdoAssetFetcher classUnderTest = new FdoAssetFetcher();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
     }
 }

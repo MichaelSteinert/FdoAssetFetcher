@@ -2,12 +2,14 @@
 guava = "32.1.2-jre"
 junit-jupiter = "5.10.0"
 edc-connector-client = "0.1.0"
+fdo-manager-sdk = "0.1.0-rc7"
 edc = "0.6.0"
 
 [libraries]
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
 edc-connector-client = { module = "io.think-it:edc-connector-client", version.ref = "edc-connector-client" }
+fdo-manager-sdk = { module = "com.indiscale.fdo:fdo-manager-sdk", version.ref = "fdo-manager-sdk" }
 
 edc-control-plane-api-client = { module = "org.eclipse.edc:control-plane-api-client", version.ref = "edc" }
 edc-control-plane-api = { module = "org.eclipse.edc:control-plane-api", version.ref = "edc" }
