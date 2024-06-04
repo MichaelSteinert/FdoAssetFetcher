@@ -18,7 +18,7 @@ public class FdoAssetFetcher {
         // Criteria for fetching only FDO asset
         List<Criterion> criteria = List.of(
                 Criterion.Builder.newInstance().raw(Json.createObjectBuilder()
-                        .add("operandLeft", "https://w3id.org/edc/v0.0.1/ns/isFDO")
+                        .add("operandLeft", "https://w3id.org/edc/v0.0.1/ns/isFdo")
                         .add("operator", "=")
                         .add("operandRight", "true")
                         .build()).build()

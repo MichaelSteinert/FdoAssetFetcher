@@ -26,7 +26,7 @@ curl -d '{
         "name": "Product EDC Demo Asset",
         "contenttype": "application/json",
         "description": "Product Description about Test Asset",
-        "isFDO": "true"
+        "isFdo": "true"
     },
     "dataAddress": {
         "type": "HttpData",
