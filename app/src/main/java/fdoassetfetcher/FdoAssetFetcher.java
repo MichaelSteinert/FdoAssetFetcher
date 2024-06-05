@@ -9,9 +9,13 @@ import jakarta.json.Json;
 import java.util.List;
 
 public class FdoAssetFetcher {
-    private final EdcConnectorClient edcClient = EdcConnectorClient.newBuilder()
-            .managementUrl("http://localhost:19193/management")
-            .build();
+    private final EdcConnectorClient edcClient;
+
+    public FdoAssetFetcher(String managementUrl) {
+        this.edcClient = EdcConnectorClient.newBuilder()
+                .managementUrl(managementUrl)
+                .build();
+    }
 
     public Catalog fetchCatalog() {
         Catalogs catalogService = edcClient.catalogs();
@@ -28,7 +32,6 @@ public class FdoAssetFetcher {
                 .offset(0)
                 .limit(10)
                 .sortOrder("ASC")
-                //.sortField("field1")
                 .filterExpression(criteria)
                 .build();
         // Request to catalog
