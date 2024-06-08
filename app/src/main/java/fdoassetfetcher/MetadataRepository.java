@@ -7,6 +7,8 @@ import com.indiscale.fdo.manager.api.*;
 import com.indiscale.fdo.manager.doip.DoipRepository;
 import com.indiscale.fdo.manager.util.Util;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,7 +32,12 @@ public class MetadataRepository {
 			FdoProfile profile = FdoProfile.GENERIC_FDO;
             InputStream mdInputStream = new ByteArrayInputStream(edcMetadata.toString().getBytes());
             Metadata metadata = new DefaultMetadata(mdInputStream);
-            Data data = new DefaultData(new ByteArrayInputStream("https://jsonplaceholder.typicode.com/todos".getBytes())); //TODO replace by data URL
+			Data data = null;
+            try {
+				data = new DefaultData(new FileInputStream(new File("../"+edcMetadata.id()))); //TODO replace by data URL
+            }catch (Exception e) {
+            	data =  new DefaultData(new ByteArrayInputStream("https://jsonplaceholder.typicode.com/todos".getBytes())); //TODO replace by data URL
+            }
 			FDO fdo = repository.createFDO(new DefaultFdo(null, profile, data, metadata));
             System.out.println("Created FDO with PID: " + fdo.getPID());
         }
