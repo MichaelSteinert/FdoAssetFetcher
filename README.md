@@ -9,7 +9,6 @@
 ```bash
 java -Dedc.keystore=connector/resources/certs/cert.pfx \
      -Dedc.keystore.password=123456 \
-     -Dedc.vault=connector/resources/configuration/provider-vault.properties \
      -Dedc.fs.config=connector/resources/configuration/provider-configuration.properties \
      -jar connector/build/libs/connector.jar
 ```

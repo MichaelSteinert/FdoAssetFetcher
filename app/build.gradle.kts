@@ -15,10 +15,6 @@ repositories {
 }
 
 dependencies {
-    testImplementation(libs.junit.jupiter)
-
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
     implementation(libs.edc.connector.client)
     implementation(libs.guava)
     implementation(libs.fdo.manager.sdk)
@@ -32,8 +28,4 @@ java {
 
 application {
     mainClass.set("fdoassetfetcher.FdoAssetFetcher")
-}
-
-tasks.named<Test>("test") {
-    useJUnitPlatform()
 }
