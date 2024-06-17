@@ -1,3 +1,16 @@
+# About this repository
+
+It contains two proof-of-concepts for provider connectors.
+
+Minimal provider connector:
+- Allows to create example assets
+- Daemon (connector service)
+
+App:
+- Checks daemon for new objects
+- If there are new assets, they will be published as FDO
+
+
 ### 1. Build the connector
 
 ```bash
