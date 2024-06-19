@@ -1,15 +1,10 @@
 # About this repository
 
-It contains two proof-of-concepts for provider connectors.
+It contains a proof-of-concept for the FDO-EDC adapter. For demonstration and testing purposes a minimal provider connector service is included as well.
 
-Minimal provider connector:
-- Allows to create example assets
-- Daemon (connector service)
+## Minimal Asset Provider Service
 
-App:
-- Checks daemon for new objects
-- If there are new assets, they will be published as FDO
-
+- Allows to create example assets which then can be fetched by the "App" and published as FDO.
 
 ### 1. Build the connector
 
@@ -90,6 +85,8 @@ curl -d '{
 
 ### 6. Fetch catalog
 
+For manual testing.
+
 ```bash
 curl -d '{
     "@context": {
@@ -100,4 +97,21 @@ curl -d '{
 }' \
   -H 'content-type: application/json' http://localhost:19193/management/v2/catalog/request \
   -s
+```
+
+## FDO-EDC Adapter ("App")
+
+Fetches the catalog of assets. If there are new assets marked as `isFdo=true`, they will be published as FDO.
+
+### Configure the FDO Repository where the FDOs will be created.
+
+* Store a valid repository config json to `app/.test.linkahead.json` [Example](https://gitlab.indiscale.com/fdo/fdo-manager-library/-/blob/main/.test.linkahead.json.example)
+
+### Start the App
+
+* We assume that the Asset Provider Service is running because the connection details are hard-coded right now.
+* We skip tests because they don't seem to be passing right now.
+
+```bash
+gradlew run -x test
 ```

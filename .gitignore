@@ -58,3 +58,5 @@ node_modules/
 
 # Generated reports
 reports/
+
+app/.test.linkahead.json

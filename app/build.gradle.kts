@@ -31,7 +31,7 @@ java {
 }
 
 application {
-    mainClass.set("fdoassetfetcher.FdoAssetFetcher")
+    mainClass.set("fdoassetfetcher.Main")
 }
 
 tasks.named<Test>("test") {
