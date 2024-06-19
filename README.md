@@ -113,5 +113,5 @@ Fetches the catalog of assets. If there are new assets marked as `isFdo=true`, t
 * We skip tests because they don't seem to be passing right now.
 
 ```bash
-gradlew run -x test
+./gradlew run -x test
 ```
