@@ -2,6 +2,8 @@
 
 It contains a proof-of-concept for the FDO-EDC adapter. For demonstration and testing purposes a minimal provider connector service is included as well.
 
+**Important:** Because of [Issue #1](https://gitlab.indiscale.com/caosdb/customers/gwdg/fdoasset/-/issues/1), an asset, a policy, and a contract need to be created **before** the FDO-EDC Adapter ("App") is run with `gradlew run -x test`.
+
 ## Minimal Asset Provider Service
 
 - Allows to create example assets which then can be fetched by the "App" and published as FDO.
