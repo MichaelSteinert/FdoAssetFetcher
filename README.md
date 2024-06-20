@@ -13,7 +13,7 @@ java -Dedc.keystore=connector/resources/certs/cert.pfx \
      -jar connector/build/libs/connector.jar
 ```
 
-### 3. Create an asset
+### 3. Create an asset with id `myAssetId`
 
 ```bash
 curl -d '{
@@ -28,27 +28,28 @@ curl -d '{
         "isFdo": "true"
     },
     "dataAddress": {
+        "@type": "DataAddress",
         "type": "HttpData",
         "baseUrl": "https://jsonplaceholder.typicode.com/todos",
-        "proxyPath": "true"
+        "proxyPath": "true",
+        "proxyQueryParams": "true"
     }
 }' \
   -H 'content-type: application/json' http://localhost:19193/management/v3/assets \
   -s
 ```
 
-### 4. Create a policy
+### 4. Create a unrestricted policy
 
 ```bash
 curl -d '{
     "@context": {
-        "@vocab": "https://w3id.org/edc/v0.0.1/ns/",
         "odrl": "http://www.w3.org/ns/odrl/2/"
     },
     "@id": "PolicyForTestAsset",
+    "@type": "PolicyDefinitionRequestDto",
     "policy": {
-        "@context": "http://www.w3.org/ns/odrl.jsonld",
-        "@type": "Set",
+        "@type": "http://www.w3.org/ns/odrl/2/Set",
         "permission": [],
         "prohibition": [],
         "obligation": []
@@ -58,7 +59,7 @@ curl -d '{
   -s
 ```
 
-### 5. Create a contract definition
+### 5. Create a contract definition for asset with id `myAssetId`
 
 ```bash
 curl -d '{
@@ -66,9 +67,15 @@ curl -d '{
     "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
   },
   "@id": "ContractDefinitionForTestAsset",
+  "@type": "ContractDefinition",
   "accessPolicyId": "PolicyForTestAsset",
   "contractPolicyId": "PolicyForTestAsset",
-  "assetsSelector": []
+      "assetsSelector": {
+        "@type": "CriterionDto",
+        "operandLeft": "https://w3id.org/edc/v0.0.1/ns/id",
+        "operator": "=",
+        "operandRight": "myAssetId"
+    }
 }' \
   -H 'content-type: application/json' http://localhost:19193/management/v2/contractdefinitions \
   -s
@@ -79,10 +86,15 @@ curl -d '{
 ```bash
 curl -d '{
     "@context": {
-        "@vocab": "https://w3id.org/edc/v0.0.1/ns/"
+        "edc": "https://w3id.org/edc/v0.0.1/ns/"
     },
+    "@type": "CatalogRequest",
     "counterPartyAddress": "http://localhost:19194/protocol",
-    "protocol": "dataspace-protocol-http"
+    "protocol": "dataspace-protocol-http",
+    "querySpec": {
+        "offset": 0,
+        "limit": 5
+    }
 }' \
   -H 'content-type: application/json' http://localhost:19193/management/v2/catalog/request \
   -s
