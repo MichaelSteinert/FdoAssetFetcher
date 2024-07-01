@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+
 public class Main {
     public static void main(String[] args) {
         FdoAssetFetcher fetcher = new FdoAssetFetcher("http://localhost:19193/management");
@@ -18,7 +19,13 @@ public class Main {
         System.out.println("---FDO Asset Fetcher started---");
         // Schedule fetching the catalog every 10 seconds and process any new fdo assets
         executor.scheduleAtFixedRate(() -> {
-            Catalog catalog = fetcher.fetchCatalog();
+			Catalog catalog = null;
+			try {
+				catalog = fetcher.fetchCatalog();
+			}
+            catch(Exception e) {
+				System.out.println(e);
+            }
             if (catalog != null && catalog.dataset() != null && catalog.dataset().raw() != null) {
                 JsonArray datasets = catalog.raw().getJsonArray("http://www.w3.org/ns/dcat#dataset");
                 if (datasets != null) {
@@ -35,6 +42,7 @@ public class Main {
                             } catch (Exception e) {
                                 throw new RuntimeException(e);
                             }
+						System.out.println("Dataset is done");
                         }
                     }
                 } else {
@@ -43,6 +51,8 @@ public class Main {
             } else {
                 System.out.println("Failed to fetch catalog or catalog is null, or no dataset available.");
             }
+			System.out.println("waiting...");
+
         }, 0, 10, TimeUnit.SECONDS);
         System.out.println("---FDO Asset Fetcher stopped---");
     }
